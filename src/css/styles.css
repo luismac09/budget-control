@@ -1,0 +1,12 @@
+html {
+	font-size: 10px;
+}
+@font-face {
+	font-family: 'Albert Sans';
+	src: url(../assets/fonts/AlbertSans.woff2) format('woff2'),
+		url(../assets/fonts/AlbertSans.woff) format('woff');
+	font-display: swap;
+}
+body {
+	background-color: #333;
+}

@@ -1,5 +1,12 @@
-<script setup></script>
+<script setup>
+import BudgetControl from './pages/BudgetControl.vue'
+</script>
 
-<template></template>
-
-<style></style>
+<template>
+	<budget-control />
+</template>
+<style>
+#app {
+	font-family: 'Albert Sans';
+}
+</style>
