@@ -1,9 +1,9 @@
 <script setup>
-import BudgetControl from './pages/BudgetControl.vue'
+import BudgetPage from './pages/BudgetPage.vue'
 </script>
 
 <template>
-	<budget-control />
+	<budget-page />
 </template>
 <style>
 #app {

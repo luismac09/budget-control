@@ -1,9 +1,9 @@
 <script setup>
-import BudgetHeader from '../components/BudgetHeader.vue'
+import CustomHeader from '../components/CustomHeader.vue'
 import NewBudget from '../components/NewBudget.vue'
 </script>
 <template>
-	<budget-header />
+	<custom-header />
 	<new-budget />
 </template>
 <style scoped></style>

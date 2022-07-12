@@ -1,9 +1,11 @@
 <script setup>
-import BudgetForm from './BudgetForm.vue'
+import { ref } from 'vue'
+import CustomForm from './CustomForm.vue'
+const budget = ref('0')
 </script>
 <template>
 	<div class="wrapper shadow">
-		<budget-form />
+		<custom-form :budget="budget" />
 	</div>
 </template>
 <style scoped>
