@@ -1,11 +1,21 @@
 <script setup>
 import { ref } from 'vue'
 import CustomForm from './CustomForm.vue'
-const budget = ref('0')
+const budget = ref(0)
+const setBudget = data => (budget.value = data.value)
+
+const isValid = ref(false)
+const setIsValid = data => (isValid.value = data.value)
 </script>
 <template>
 	<div class="wrapper shadow">
-		<custom-form :budget="budget" />
+		<h3 v-if="isValid">Your budget</h3>
+		<custom-form
+			v-else
+			:budget="budget"
+			@set-budget="setBudget($event)"
+			@set-is-valid="setIsValid($event)"
+		/>
 	</div>
 </template>
 <style scoped>

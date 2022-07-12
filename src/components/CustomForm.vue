@@ -5,17 +5,22 @@ import { computed, ref } from 'vue'
 
 const props = defineProps({
 	budget: {
-		type: String,
+		type: Number,
 		required: true
 	}
 })
-const mustBeNumber = value => Number(value)
-const mustBePositiveNumber = value => Number(value) > 0
+const emits = defineEmits(['setBudget', 'setIsValid'])
+
 const budget = ref(props.budget)
+const isValid = ref(null)
+
+const mustBePositiveNumber = value => value > 0
+const mustNotBeZero = value => value !== 0
+
 const rules = computed(() => ({
 	budget: {
 		required,
-		mustBeNumber: helpers.withMessage('Must Be a Number', mustBeNumber),
+		mustNotBeZero: helpers.withMessage('Must not be zero', mustNotBeZero),
 		mustBePositiveNumber: helpers.withMessage(
 			'Must be positive number',
 			mustBePositiveNumber
@@ -27,13 +32,15 @@ const v$ = useVuelidate(rules, { budget })
 
 const handleSubmit = async () => {
 	const isCorrect = await v$.value.$validate()
-	if (isCorrect) {
-		console.log('sending form....')
-	} else {
+	if (!isCorrect) {
 		console.log('no submit')
+		return
 	}
+	emits('setBudget', budget)
+	isValid.value = true
+	emits('setIsValid', isValid)
+	console.log('sending form....')
 }
-const setBudget = $event => (budget.value = $event.target.value)
 </script>
 <template>
 	<form class="form" @submit.prevent="handleSubmit()">
@@ -41,12 +48,11 @@ const setBudget = $event => (budget.value = $event.target.value)
 			<label class="label" for="budget">Add Budget</label>
 			<input
 				id="budget"
-				:value="budget"
+				v-model="budget"
 				name="budget"
 				class="input"
-				type="text"
+				type="number"
 				placeholder="Add your budget"
-				@input="setBudget"
 			/>
 			<span v-if="v$.budget.$error" class="error-message">{{
 				v$.budget.$errors[0].$message
