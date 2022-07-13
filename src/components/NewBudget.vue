@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
-import CustomForm from './CustomForm.vue'
+import BudgetForm from './BudgetForm.vue'
+import BudgetPanel from './BudgetPanel.vue'
 const budget = ref(0)
 const setBudget = data => (budget.value = data.value)
 
@@ -9,8 +10,8 @@ const setIsValid = data => (isValid.value = data.value)
 </script>
 <template>
 	<div class="wrapper shadow">
-		<h3 v-if="isValid">Your budget</h3>
-		<custom-form
+		<budget-panel v-if="isValid" :budget="budget" />
+		<budget-form
 			v-else
 			:budget="budget"
 			@set-budget="setBudget($event)"
