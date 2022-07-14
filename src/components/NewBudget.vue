@@ -2,11 +2,16 @@
 import { ref } from 'vue'
 import BudgetForm from './BudgetForm.vue'
 import BudgetPanel from './BudgetPanel.vue'
+
+const emits = defineEmits(['setIsValid'])
 const budget = ref(0)
 const setBudget = data => (budget.value = data.value)
 
 const isValid = ref(false)
-const setIsValid = data => (isValid.value = data.value)
+const setIsValid = data => {
+	isValid.value = data.value
+	emits('setIsValid', isValid)
+}
 </script>
 <template>
 	<div class="wrapper shadow">

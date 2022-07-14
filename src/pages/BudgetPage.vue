@@ -1,9 +1,41 @@
 <script setup>
+import addIcon from '@/assets/images/icon/add.svg'
+import { ref } from 'vue'
 import BudgetHead from '../components/BudgetHead.vue'
+import ModalForm from '../components/ModalForm.vue'
 import NewBudget from '../components/NewBudget.vue'
+const isValid = ref(false)
+const isModalOpen = ref(false)
+const setIsValid = data => (isValid.value = data.value)
+const setIsModalOpen = data => (isModalOpen.value = data.value)
 </script>
 <template>
 	<budget-head />
-	<new-budget />
+	<new-budget @set-is-valid="setIsValid($event)" />
+	<div v-if="isValid" class="new-expense">
+		<img
+			:src="addIcon"
+			alt="add-icon"
+			title="add new expense"
+			width="50"
+			height="50"
+			@click="isModalOpen = true"
+		/>
+	</div>
+	<modal-form
+		v-if="isModalOpen"
+		:is-modal-open="isModalOpen"
+		@set-is-modal-open="setIsModalOpen($event)"
+	/>
 </template>
-<style scoped></style>
+<style scoped>
+.new-expense {
+	position: absolute;
+	bottom: 3em;
+	right: 3em;
+}
+div > img:hover {
+	cursor: pointer;
+	opacity: 70%;
+}
+</style>
