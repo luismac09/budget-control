@@ -8,5 +8,6 @@ import BudgetPage from './pages/BudgetPage.vue'
 <style>
 #app {
 	font-family: 'Albert Sans';
+	min-height: 100vh;
 }
 </style>

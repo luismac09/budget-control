@@ -24,8 +24,8 @@ const formatToDollar = quantity =>
 				Available:
 				<span class="available-quantity">{{ formatToDollar(0) }}</span>
 			</p>
-			<p class="spent">
-				Spent: <span class="spent-quantity">{{ formatToDollar(0) }}</span>
+			<p class="expense">
+				Expense: <span class="expense-quantity">{{ formatToDollar(0) }}</span>
 			</p>
 		</div>
 	</div>
@@ -52,14 +52,14 @@ const formatToDollar = quantity =>
 }
 .total,
 .available,
-.spent {
+.expense {
 	color: rgb(147, 105, 189);
 	font-size: 2rem;
 	font-weight: 700;
 }
 .total-quantity,
 .available-quantity,
-.spent-quantity {
+.expense-quantity {
 	color: rgb(68, 66, 66);
 	font-weight: 400;
 }
