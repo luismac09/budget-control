@@ -6,8 +6,16 @@ import ModalForm from '../components/ModalForm.vue'
 import NewBudget from '../components/NewBudget.vue'
 const isValid = ref(false)
 const isModalOpen = ref(false)
+const isAnimated = ref(false)
 const setIsValid = data => (isValid.value = data.value)
 const setIsModalOpen = data => (isModalOpen.value = data.value)
+const setIsAnimated = data => (isAnimated.value = data.value)
+const handleModal = () => {
+	isModalOpen.value = true
+	setTimeout(() => {
+		isAnimated.value = true
+	}, 500)
+}
 </script>
 <template>
 	<budget-head />
@@ -19,13 +27,15 @@ const setIsModalOpen = data => (isModalOpen.value = data.value)
 			title="add new expense"
 			width="50"
 			height="50"
-			@click="isModalOpen = true"
+			@click="handleModal"
 		/>
 	</div>
 	<modal-form
 		v-if="isModalOpen"
 		:is-modal-open="isModalOpen"
+		:is-animated="isAnimated"
 		@set-is-modal-open="setIsModalOpen($event)"
+		@set-is-animated="setIsAnimated($event)"
 	/>
 </template>
 <style scoped>
