@@ -1,101 +1,102 @@
 <script setup>
-import closeIcon from '@/assets/images/icon/close.svg'
-import { ref } from 'vue'
+import { useVuelidate } from '@vuelidate/core'
+import { helpers, required } from '@vuelidate/validators'
+import { computed, reactive } from 'vue'
 
-const props = defineProps({
-	isModalOpen: {
-		type: Boolean,
-		required: true
-	},
-	isAnimated: {
-		type: Boolean,
-		required: true
+const emits = defineEmits(['saveExpense'])
+const state = reactive({
+	name: '',
+	expense: 0,
+	category: ''
+})
+const rules = computed(() => {
+	return {
+		name: { required },
+		expense: {
+			required,
+			mustNotBeZero: helpers.withMessage(
+				'must not be Zero',
+				value => value > 0
+			),
+			mustBePositiveNumber: helpers.withMessage(
+				'must be positive number',
+				value => value > 0
+			)
+		},
+		category: { required }
 	}
 })
 
-const emits = defineEmits(['setIsModalOpen', 'setIsAnimated'])
+const v$ = useVuelidate(rules, state)
 
-const isModalOpen = ref(props.isModalOpen)
-const isAnimated = ref(props.isAnimated)
-const closeModal = () => {
-	isAnimated.value = false
-	emits('setIsAnimated', isAnimated)
-	setTimeout(() => {
-		isModalOpen.value = false
-		emits('setIsModalOpen', isModalOpen)
-	}, 500)
+const handleSubmit = async () => {
+	const isValid = await v$.value.$validate()
+	if (!isValid) {
+		return
+	}
+	const { name, expense, category } = state
+	emits('saveExpense', { name, expense, category })
 }
 </script>
 <template>
-	<div class="modal">
-		<div class="icon-close">
-			<img
-				:src="closeIcon"
-				alt="close icon"
-				title="close"
-				class="close-icon"
-				width="20"
-				height="20"
-				@click="closeModal"
+	<form class="form text-shadow" @submit.prevent="handleSubmit">
+		<legend class="legend">Edit your new Expense</legend>
+		<div class="field">
+			<label class="label" for="name" title="give your expense a name"
+				>Name</label
+			>
+			<input
+				id="name"
+				v-model="state.name"
+				class="input"
+				type="text"
+				placeholder="Name"
 			/>
+			<span v-if="v$.name.$error">{{ v$.name.$errors[0].$message }}</span>
 		</div>
-		<form class="form text-shadow" :class="{ animate: props.isAnimated }">
-			<legend class="legend">Edit your new Expense</legend>
-			<div class="field">
-				<label class="label" for="name" title="give your expense a name"
-					>Name</label
-				>
-				<input id="name" class="input" type="text" placeholder="Name" />
-			</div>
-			<div class="field">
-				<label class="label" for="expense" title="give your expense"
-					>Expense</label
-				>
-				<input id="expense" class="input" type="number" placeholder="Expense" />
-			</div>
-			<div class="field">
-				<label class="label" for="category" title="give your expense a category"
-					>Category</label
-				>
-				<select id="category" class="input">
-					<option value="">---Select---</option>
-					<option value="">Saving</option>
-					<option value="">Food</option>
-					<option value="">Home</option>
-					<option value="">For treat yourself</option>
-					<option value="">Health</option>
-					<option value="">Subscriptions</option>
-					<option value="">Other Expenses</option>
-				</select>
-			</div>
-			<input type="submit" class="submit" value="Hecho" />
-		</form>
-	</div>
+		<div class="field">
+			<label class="label" for="expense" title="give your expense"
+				>Expense</label
+			>
+			<input
+				id="expense"
+				v-model="state.expense"
+				class="input"
+				type="number"
+				placeholder="Expense"
+			/>
+			<span v-if="v$.expense.$error">{{ v$.expense.$errors[0].$message }}</span>
+		</div>
+		<div class="field">
+			<label class="label" for="category" title="give your expense a category"
+				>Category</label
+			>
+			<select id="category" v-model="state.category" class="input">
+				<option disabled value="">-------Select-------</option>
+				<option>Saving</option>
+				<option>Food</option>
+				<option>Home</option>
+				<option>For treat yourself</option>
+				<option>Health</option>
+				<option>Subscriptions</option>
+				<option>Other Expenses</option>
+			</select>
+			<span v-if="v$.category.$error">{{
+				v$.category.$errors[0].$message
+			}}</span>
+		</div>
+		<input type="submit" class="submit" value="Hecho" />
+	</form>
 </template>
 <style scoped>
-.modal {
-	position: absolute;
-	background-color: rgb(0 0 0/0.92);
-	color: white;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-}
-.icon-close {
-	position: absolute;
-	top: 1em;
-	right: 2em;
-}
 .form {
 	max-width: 80rem;
 	width: 40rem;
 	margin: auto;
-	transition: all 300ms ease-in;
-	opacity: 0;
+	--color: #9032dd;
+	color: var(--color);
 }
 .text-shadow {
-	color: #125ed8;
 	text-shadow: 0 0 5px rgb(121, 119, 119);
 }
 .legend {
@@ -130,23 +131,19 @@ const closeModal = () => {
 	font-size: 1.9rem;
 	font-weight: 900;
 	text-transform: uppercase;
-	color: #333;
+	color: var(--color);
 	transition: background-color 300ms ease, color 300ms ease;
 }
-
-.animate {
-	position: relative;
-	opacity: 1;
-}
-.close {
-	opacity: 0;
-}
-div > img:hover {
-	cursor: pointer;
+.field > span {
+	font-size: 1.4rem;
+	color: red;
+	text-align: right;
+	padding-top: 0.4em;
+	padding-right: 1em;
 }
 form > input:hover {
 	cursor: pointer;
-	background-color: #125ed8;
+	background-color: var(--color);
 	color: white;
 }
 </style>

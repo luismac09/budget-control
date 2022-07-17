@@ -2,7 +2,7 @@
 import addIcon from '@/assets/images/icon/add.svg'
 import { ref } from 'vue'
 import BudgetHead from '../components/BudgetHead.vue'
-import ModalForm from '../components/ModalForm.vue'
+import ModalSection from '../components/ModalSection.vue'
 import NewBudget from '../components/NewBudget.vue'
 const isValid = ref(false)
 const isModalOpen = ref(false)
@@ -30,7 +30,7 @@ const handleModal = () => {
 			@click="handleModal"
 		/>
 	</div>
-	<modal-form
+	<modal-section
 		v-if="isModalOpen"
 		:is-modal-open="isModalOpen"
 		:is-animated="isAnimated"
