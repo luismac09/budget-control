@@ -1,3 +1,4 @@
+<script setup></script>
 <template>
 	<header>
 		<h1>Budget Control</h1>

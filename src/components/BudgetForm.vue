@@ -28,18 +28,15 @@ const rules = computed(() => ({
 	}
 }))
 const v$ = useVuelidate(rules, { budget })
-// console.log(v$.value)
 
 const handleSubmit = async () => {
 	const isCorrect = await v$.value.$validate()
 	if (!isCorrect) {
-		console.log('no submit')
 		return
 	}
 	emits('setBudget', budget)
 	isValid.value = true
 	emits('setIsValid', isValid)
-	console.log('sending form....')
 }
 </script>
 <template>
