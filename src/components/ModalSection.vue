@@ -1,6 +1,7 @@
 <script setup>
 import closeIcon from '@/assets/images/icon/close.svg'
 import { ref } from 'vue'
+import { randomizeId } from '../helpers'
 import ModalForm from './ModalForm.vue'
 
 const props = defineProps({
@@ -11,13 +12,18 @@ const props = defineProps({
 	isAnimated: {
 		type: Boolean,
 		required: true
+	},
+	dataForm: {
+		type: Array,
+		required: true
 	}
 })
 
-const emits = defineEmits(['setIsModalOpen', 'setIsAnimated'])
+const emits = defineEmits(['setIsModalOpen', 'setIsAnimated', 'setState'])
 
 const isModalOpen = ref(props.isModalOpen)
 const isAnimated = ref(props.isAnimated)
+const dataForm = ref(props.dataForm)
 const closeModal = () => {
 	isAnimated.value = false
 	emits('setIsAnimated', isAnimated)
@@ -26,8 +32,12 @@ const closeModal = () => {
 		emits('setIsModalOpen', isModalOpen)
 	}, 500)
 }
-const saveExpense = expense => {
-	console.log(expense)
+const saveDataForm = state => {
+	state.id = randomizeId()
+	dataForm.value = [...dataForm.value, state]
+	console.log(dataForm.value)
+	emits('setState', dataForm.value)
+	closeModal()
 }
 </script>
 <template>
@@ -46,7 +56,7 @@ const saveExpense = expense => {
 		<modal-form
 			class="modal-form"
 			:class="{ animate: props.isAnimated }"
-			@save-expense="saveExpense"
+			@save-data-form="saveDataForm"
 		/>
 	</div>
 </template>

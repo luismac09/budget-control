@@ -3,7 +3,7 @@ import { useVuelidate } from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import { computed, reactive } from 'vue'
 
-const emits = defineEmits(['saveExpense'])
+const emits = defineEmits(['saveDataForm'])
 const state = reactive({
 	name: '',
 	expense: 0,
@@ -34,8 +34,7 @@ const handleSubmit = async () => {
 	if (!isValid) {
 		return
 	}
-	const { name, expense, category } = state
-	emits('saveExpense', { name, expense, category })
+	emits('saveDataForm', state)
 }
 </script>
 <template>

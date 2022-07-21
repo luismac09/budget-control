@@ -1,15 +1,19 @@
 <script setup>
 import addIcon from '@/assets/images/icon/add.svg'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import BudgetHead from '../components/BudgetHead.vue'
+import ExpenseList from '../components/ExpenseList.vue'
 import ModalSection from '../components/ModalSection.vue'
 import NewBudget from '../components/NewBudget.vue'
 const isValid = ref(false)
 const isModalOpen = ref(false)
 const isAnimated = ref(false)
+const state = reactive({ dataForm: [] })
 const setIsValid = data => (isValid.value = data.value)
 const setIsModalOpen = data => (isModalOpen.value = data.value)
 const setIsAnimated = data => (isAnimated.value = data.value)
+const setState = data => (state.dataForm = data)
+
 const handleModal = () => {
 	isModalOpen.value = true
 	setTimeout(() => {
@@ -34,15 +38,25 @@ const handleModal = () => {
 		v-if="isModalOpen"
 		:is-modal-open="isModalOpen"
 		:is-animated="isAnimated"
+		:data-form="state.dataForm"
 		@set-is-modal-open="setIsModalOpen($event)"
 		@set-is-animated="setIsAnimated($event)"
+		@set-state="setState($event)"
 	/>
+	<expense-list v-if="isValid" :data-form="state.dataForm" />
 </template>
 <style scoped>
 .new-expense {
 	position: absolute;
 	bottom: 3em;
 	right: 3em;
+}
+.no-expense {
+	font-size: 2rem;
+	text-transform: uppercase;
+	color: white;
+	text-align: center;
+	font-weight: 800;
 }
 div > img:hover {
 	cursor: pointer;
