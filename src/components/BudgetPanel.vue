@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { setCurrency } from '../helpers'
 const props = defineProps({
 	budget: {
 		type: Number,
@@ -7,8 +8,6 @@ const props = defineProps({
 	}
 })
 const total = ref(props.budget)
-const formatToDollar = quantity =>
-	quantity.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
 </script>
 <template>
 	<h3 class="title">Your Budget</h3>
@@ -18,14 +17,14 @@ const formatToDollar = quantity =>
 		</div>
 		<div class="content">
 			<p class="total">
-				Total: <span class="total-quantity">{{ formatToDollar(total) }}</span>
+				Total: <span class="total-quantity">{{ setCurrency(total) }}</span>
 			</p>
 			<p class="available">
 				Available:
-				<span class="available-quantity">{{ formatToDollar(0) }}</span>
+				<span class="available-quantity">{{ setCurrency(0) }}</span>
 			</p>
 			<p class="expense">
-				Expense: <span class="expense-quantity">{{ formatToDollar(0) }}</span>
+				Expense: <span class="expense-quantity">{{ setCurrency(0) }}</span>
 			</p>
 		</div>
 	</div>
