@@ -34,6 +34,7 @@ const closeModal = () => {
 }
 const saveDataForm = state => {
 	state.id = randomizeId()
+	state.date = Date.now()
 	dataForm.value = [...dataForm.value, state]
 	console.log(dataForm.value)
 	emits('setState', dataForm.value)
