@@ -52,6 +52,7 @@ const handleModal = () => {
 	position: fixed;
 	bottom: 2em;
 	right: 3em;
+	z-index: 1;
 }
 .no-expense {
 	font-size: 2rem;

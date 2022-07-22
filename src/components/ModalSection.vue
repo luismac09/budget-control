@@ -63,18 +63,24 @@ const saveDataForm = state => {
 <style scoped>
 .modal {
 	position: absolute;
-	background-color: rgb(0 0 0/0.92);
+	background-color: rgba(0, 0, 0, 0.97);
 	color: white;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
+	z-index: 2;
 }
 .icon-close {
 	position: absolute;
 	top: 1em;
-	right: 2em;
-	z-index: 1;
+	right: 0.5em;
+	z-index: 3;
+}
+@media screen and (min-width: 576px) {
+	.icon-close {
+		right: 2em;
+	}
 }
 .modal-form {
 	transition: all 300ms ease-in;

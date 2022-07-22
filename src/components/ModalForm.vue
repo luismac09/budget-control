@@ -99,11 +99,17 @@ const handleSubmit = async () => {
 	text-shadow: 0 0 5px rgb(121, 119, 119);
 }
 .legend {
-	font-size: 3rem;
+	font-size: 2.5rem;
 	text-align: center;
 	text-transform: uppercase;
 	margin-bottom: 4rem;
-	padding-top: 1em;
+	padding-top: 2.4em;
+	font-weight: 900;
+}
+@media screen and(min-width:576px) {
+	.legend {
+		font-size: 3rem;
+	}
 }
 .field {
 	display: grid;

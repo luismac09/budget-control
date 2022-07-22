@@ -15,7 +15,7 @@ const props = defineProps({
 		required: true
 	}
 })
-const iconUrl = ref({
+const icons = ref({
 	food,
 	health,
 	home,
@@ -28,7 +28,7 @@ const iconUrl = ref({
 <template>
 	<li v-for="item in props.dataForm" :key="item.id" class="item">
 		<img
-			:src="iconUrl[item.category]"
+			:src="icons[item.category]"
 			alt="expense icon"
 			widht="60"
 			height="60"
@@ -55,10 +55,9 @@ p {
 	position: relative;
 	display: flex;
 	align-items: center;
-	font-size: 1.5rem;
 	border-radius: 1em;
 	box-shadow: 2px 2px 10px rgb(124, 123, 123);
-	padding: 1em 0;
+	padding: 2.5em 0;
 	margin-bottom: 1.5em;
 }
 .item-icon {
@@ -85,18 +84,31 @@ p {
 	text-underline-offset: 0.2em;
 }
 .item-category {
-	font-size: 1.8rem;
+	font-size: 1.5rem;
 	text-transform: capitalize;
 }
 .item-name {
-	font-size: 2.8rem;
+	font-size: 1.8rem;
 	text-transform: capitalize;
 	font-weight: 700;
 	margin-top: 0;
 }
 .item-expense {
-	font-size: 3rem;
+	font-size: 2.2rem;
 	color: rgb(138, 80, 138);
 	font-weight: 900;
+	margin: 0;
+	padding-right: 1em;
+}
+@media screen and (min-width: 576px) {
+	.item-category {
+		font-size: 1.8rem;
+	}
+	.item-name {
+		font-size: 2.8rem;
+	}
+	.item-expense {
+		font-size: 3rem;
+	}
 }
 </style>
