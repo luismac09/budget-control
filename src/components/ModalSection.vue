@@ -36,7 +36,6 @@ const saveDataForm = state => {
 	state.id = randomizeId()
 	state.date = Date.now()
 	dataForm.value = [...dataForm.value, state]
-	console.log(dataForm.value)
 	emits('setState', dataForm.value)
 	closeModal()
 }
@@ -75,6 +74,7 @@ const saveDataForm = state => {
 	position: absolute;
 	top: 1em;
 	right: 2em;
+	z-index: 1;
 }
 .modal-form {
 	transition: all 300ms ease-in;

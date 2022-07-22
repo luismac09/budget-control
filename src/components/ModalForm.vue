@@ -89,8 +89,8 @@ const handleSubmit = async () => {
 </template>
 <style scoped>
 .form {
-	max-width: 80rem;
-	width: 40rem;
+	max-width: 40rem;
+	width: 95%;
 	margin: auto;
 	--color: #9032dd;
 	color: var(--color);
@@ -115,6 +115,7 @@ const handleSubmit = async () => {
 	margin-bottom: 0.2em;
 }
 .input {
+	width: 100%;
 	height: 40px;
 	text-align: center;
 	border-radius: 12px;

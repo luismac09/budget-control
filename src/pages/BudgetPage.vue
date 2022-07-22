@@ -22,33 +22,35 @@ const handleModal = () => {
 }
 </script>
 <template>
-	<budget-head />
-	<new-budget @set-is-valid="setIsValid($event)" />
-	<div v-if="isValid" class="new-expense">
-		<img
-			:src="addIcon"
-			alt="add-icon"
-			title="add new expense"
-			width="50"
-			height="50"
-			@click="handleModal"
+	<div :class="{ fixed: isModalOpen }">
+		<budget-head />
+		<new-budget @set-is-valid="setIsValid($event)" />
+		<div v-if="isValid" class="new-expense">
+			<img
+				:src="addIcon"
+				alt="add-icon"
+				title="add new expense"
+				width="50"
+				height="50"
+				@click="handleModal"
+			/>
+		</div>
+		<modal-section
+			v-if="isModalOpen"
+			:is-modal-open="isModalOpen"
+			:is-animated="isAnimated"
+			:data-form="state.dataForm"
+			@set-is-modal-open="setIsModalOpen($event)"
+			@set-is-animated="setIsAnimated($event)"
+			@set-state="setState($event)"
 		/>
+		<expense-list v-if="isValid" :data-form="state.dataForm" />
 	</div>
-	<modal-section
-		v-if="isModalOpen"
-		:is-modal-open="isModalOpen"
-		:is-animated="isAnimated"
-		:data-form="state.dataForm"
-		@set-is-modal-open="setIsModalOpen($event)"
-		@set-is-animated="setIsAnimated($event)"
-		@set-state="setState($event)"
-	/>
-	<expense-list v-if="isValid" :data-form="state.dataForm" />
 </template>
 <style scoped>
 .new-expense {
-	position: absolute;
-	bottom: 3em;
+	position: fixed;
+	bottom: 2em;
 	right: 3em;
 }
 .no-expense {
@@ -57,6 +59,10 @@ const handleModal = () => {
 	color: white;
 	text-align: center;
 	font-weight: 800;
+}
+.fixed {
+	overflow: hidden;
+	height: 100vh;
 }
 div > img:hover {
 	cursor: pointer;
