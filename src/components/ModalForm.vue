@@ -72,13 +72,13 @@ const handleSubmit = async () => {
 			>
 			<select id="category" v-model="state.category" class="input">
 				<option disabled value="">-------Select-------</option>
-				<option>Saving</option>
-				<option>Food</option>
-				<option>Home</option>
-				<option>For treat yourself</option>
-				<option>Health</option>
-				<option>Subscriptions</option>
-				<option>Other Expenses</option>
+				<option>saving</option>
+				<option>food</option>
+				<option>home</option>
+				<option>treat yourself</option>
+				<option>health</option>
+				<option>subscriptions</option>
+				<option>other expense</option>
 			</select>
 			<span v-if="v$.category.$error">{{
 				v$.category.$errors[0].$message
