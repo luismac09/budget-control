@@ -24,7 +24,10 @@ const handleModal = () => {
 <template>
 	<div :class="{ fixed: isModalOpen }">
 		<budget-head />
-		<new-budget @set-is-valid="setIsValid($event)" />
+		<new-budget
+			:data-form="state.dataForm"
+			@set-is-valid="setIsValid($event)"
+		/>
 		<div v-if="isValid" class="new-expense">
 			<img
 				:src="addIcon"

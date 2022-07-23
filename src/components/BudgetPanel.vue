@@ -1,13 +1,22 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { setCurrency } from '../helpers'
 const props = defineProps({
 	budget: {
 		type: Number,
 		required: true
+	},
+	dataForm: {
+		type: Array,
+		required: true
 	}
 })
 const total = ref(props.budget)
+
+const totalExpense = computed(() =>
+	props.dataForm.reduce((total, n) => n.expense + total, 0)
+)
+const totalAvailable = computed(() => total.value - totalExpense.value)
 </script>
 <template>
 	<h3 class="title">Your Budget</h3>
@@ -21,10 +30,13 @@ const total = ref(props.budget)
 			</p>
 			<p class="available">
 				Available:
-				<span class="available-quantity">{{ setCurrency(0) }}</span>
+				<span class="available-quantity">{{
+					setCurrency(totalAvailable)
+				}}</span>
 			</p>
 			<p class="expense">
-				Expense: <span class="expense-quantity">{{ setCurrency(0) }}</span>
+				Expense:
+				<span class="expense-quantity">{{ setCurrency(totalExpense) }}</span>
 			</p>
 		</div>
 	</div>

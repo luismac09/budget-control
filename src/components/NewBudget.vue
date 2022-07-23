@@ -2,7 +2,12 @@
 import { ref } from 'vue'
 import BudgetForm from './BudgetForm.vue'
 import BudgetPanel from './BudgetPanel.vue'
-
+const props = defineProps({
+	dataForm: {
+		type: Array,
+		required: true
+	}
+})
 const emits = defineEmits(['setIsValid'])
 const budget = ref(0)
 const setBudget = data => (budget.value = data.value)
@@ -15,7 +20,7 @@ const setIsValid = data => {
 </script>
 <template>
 	<div class="wrapper shadow">
-		<budget-panel v-if="isValid" :budget="budget" />
+		<budget-panel v-if="isValid" :budget="budget" :data-form="props.dataForm" />
 		<budget-form
 			v-else
 			:budget="budget"
